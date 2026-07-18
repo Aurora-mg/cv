@@ -817,27 +817,34 @@
        全部失败则保留 CSS 渐变占位，布局不塌陷
        ============================================================ */
     function tryLoadAvatar(imgEl) {
-      // 优先级队列：用户上传照片 → avatar 系列
-      const candidates = [
-        '/main/豆包证件照_黑白.jpg',  // 用户上传的证件照（优先）
-        '/main/avatar.png',
-        '/main/avatar.jpg',
-        '/main/avatar.jpeg'
-      ];
-      let i = 0;
-      const attempt = () => {
-        if (i >= candidates.length) return; // 全部失败，保持占位，不报错
-        const test = new Image();
-        test.onload = () => {
-          imgEl.src = candidates[i];      // 成功即采用该格式
-          imgEl.classList.add('loaded');   // 显示真实图片，覆盖占位首字
-        };
-        test.onerror = () => { i++; attempt(); }; // 失败则尝试下一种格式
-        test.src = candidates[i];
-      };
-      attempt();
+  const candidates = [
+    'main/豆包证件照_黑白.jpg',
+    'main/avatar.png',
+    'main/avatar.jpg',
+    'main/avatar.jpeg'
+  ];
+  let i = 0;
+  const attempt = () => {
+    if (i >= candidates.length) {
+      console.log('所有图片加载失败，尝试的路径：', candidates);
+      return;
     }
-    tryLoadAvatar(document.getElementById('avatarImg'));
+    console.log('尝试加载：', candidates[i]);  // 调试日志
+    const test = new Image();
+    test.onload = () => {
+      console.log('成功加载：', candidates[i]);
+      imgEl.src = candidates[i];
+      imgEl.classList.add('loaded');
+    };
+    test.onerror = () => { 
+      console.log('加载失败：', candidates[i]);
+      i++; 
+      attempt(); 
+    };
+    test.src = candidates[i];
+  };
+  attempt();
+}
   </script>
 </body>
 </html>
