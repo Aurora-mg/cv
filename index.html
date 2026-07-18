@@ -819,10 +819,10 @@
 function tryLoadAvatar(imgEl) {
       // 优先级队列：用户上传照片 → avatar 系列
       const candidates = [
-        'main/image.jpg',  // 用户上传的证件照（优先）
-        'main/avatar.png',
-        'main/avatar.jpg',
-        'main/avatar.jpeg'
+        './image.jpg',  // 用户上传的证件照（优先）
+        './avatar.png',
+        './avatar.jpg',
+        './avatar.jpeg'
       ];
       let i = 0;
       const attempt = () => {
